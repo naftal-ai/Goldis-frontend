@@ -1,3 +1,5 @@
+@import url(./varibles.css);
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,7 +9,92 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* header */
+.main-header{
+  position: relative;
+  top: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  margin-bottom: 20px;
 }
+
+#header-bg{
+  position: absolute;
+  max-height: 80px;
+  object-fit: cover;
+  width: 100%;
+  z-index: -1; 
+}
+.main-header > .name{
+  flex-grow: 1;
+  text-align: center;
+}
+.main-navbar{
+  display: flex;
+  flex-grow: 2;
+  justify-content: space-around;
+  align-items: baseline;
+}
+
+
+.navbar-ul{
+  display: flex;
+  flex-grow: 3;
+  flex-basis: 500px;
+  max-width: 700px;
+  align-items: center;
+  justify-content: space-around;
+  border: solid gainsboro 4px;
+  border-radius: 25px;
+  background-color: #fff;
+  margin: 0;
+  padding: 10px 20px;
+  list-style: none;
+}
+
+.navbar-ul a{
+  flex-grow: 1;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 1.3em;
+}
+
+.icons{
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 2;
+}
+
+a span.material-symbols-outlined{
+  font-size: 2em;;
+}
+
+.material-symbols-outlined{
+  padding: 10px;
+}
+
+
+/* Button */
+.btn{
+  all: unset;
+  cursor: pointer;
+  border: solid 1px grey;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.btn-sea{
+  border: solid 1px var(--sea-border);
+  background-color: var(--sea-bg);
+  color: #fff;
+}
+
+.btn-red{
+  border: solid 1px var(--red-border);
+  background-color: var(--red-bg);
+  color: #fff;
+}
+

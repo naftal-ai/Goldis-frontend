@@ -1,0 +1,69 @@
+@import url('../../varibles.css');
+
+
+.product-page{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+/* description */ 
+.description{
+    flex-basis: 200px;
+    flex-grow: 1;
+    max-width: 400px;
+    min-width: 20%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.description .btn{
+    max-width: 100px;
+}
+
+/* size-selctor */
+.size-selector{
+    display: flex;
+    justify-content: space-around;
+}
+
+/* image-selector */
+.image-selector{
+    display: flex;
+    flex-grow: 2;
+    min-width: 70%;
+    max-width: 1000px;
+}
+
+.image-selector  img{
+    max-width: 80%;
+    max-height: 80vh;
+}
+
+.image-selector > .scroller{
+    max-width: 200px;
+    flex-grow: 1;
+}
+
+.image-selector > .scroller > img{
+    opacity: 30%;
+    cursor: pointer;
+}
+
+.image-selector > .scroller > img.active{
+    opacity: 100%;
+}
+
+
+/* size-selctor */
+.size-selector{
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+
