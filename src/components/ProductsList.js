@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { useOutletContext } from "react-router-dom";
 import ProductCard from "./ProductCard";
-import { ProductsContext } from "../contexts/ProductsContext";
 import Loading from "./Loading";
+import useProducts from "../hooks/useProducts";
 
 
 const ProductsList = ({ category }) => {
-  const { products, loading } = useContext(ProductsContext);
+  
+  const { products, loading } = useProducts();
   const searchValue = useOutletContext();
 
     return (

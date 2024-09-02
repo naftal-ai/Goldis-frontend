@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useCart from '../hooks/useCart.js';
+
 const NavBar = () => {
+  const { state: cartState } = useCart();
+  
   return (
     <nav className="main-navbar">
       <ul className="navbar-ul">
@@ -16,7 +20,8 @@ const NavBar = () => {
       </ul>
 
       <div className="icons">
-        <Link to={"/my-cart"}>
+        <Link to={"/my-cart"} className="cart-icon">
+          <span className={cartState.length <= 0 && 'hidden'}>{cartState.reduce((acc, {amount}) => acc + amount, 0)}</span>
           <span className="material-symbols-outlined">shopping_cart</span>
         </Link>
         <Link to={'/login'}>

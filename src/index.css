@@ -68,6 +68,19 @@ body {
   flex-grow: 2;
 }
 
+a.cart-icon{
+  position: relative;
+}
+
+a.cart-icon > span:first-child{
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 25px;
+  padding: 2px 8px;
+  background-color: red;
+}
+
 a span.material-symbols-outlined{
   font-size: 2em;;
 }
@@ -75,6 +88,7 @@ a span.material-symbols-outlined{
 .material-symbols-outlined{
   padding: 10px;
 }
+
 
 
 /* Button */
@@ -98,3 +112,7 @@ a span.material-symbols-outlined{
   color: #fff;
 }
 
+/* hidden */
+.hidden{
+  visibility: hidden;
+}

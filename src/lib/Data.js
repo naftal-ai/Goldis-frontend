@@ -782,6 +782,7 @@ export const products = [
     }
 ]
 
+// /goldis/products
 export const users = [
     {
       "id": 1,
@@ -994,3 +995,8 @@ export const users = [
       "updatedAt": "2024-08-10T18:47:34.000Z"
     }
   ];
+
+  //1. products 
+  //2. users
+  //3. orders
+  //4. cart-state
