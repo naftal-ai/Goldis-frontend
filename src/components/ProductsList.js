@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useOutletContext } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import Loading from "./Loading";
@@ -18,9 +18,9 @@ const ProductsList = ({ category }) => {
         ) : (
           <>
             {products
-              .filter((p) => (p.category.name === category || category === 'all-products') && p.title.toLowerCase().includes(searchValue.toLowerCase()))
+              .filter((p) => (p.category.name === category || category === 'all-products') && p.name.toLowerCase().includes(searchValue.toLowerCase()))
               .map((p) => (
-                <li key={p.id} className="product-card" >
+                <li key={p._id} className="product-card" >
                   <ProductCard product={p}/>
                 </li>
               ))}

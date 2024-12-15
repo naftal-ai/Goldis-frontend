@@ -1,45 +1,35 @@
 import { useState, useEffect } from "react";
-import { products as data } from "../lib/Data.js";
-//import axios from 'axios';
+import { API_BASE_URL } from "../lib/Constants";
+import axios from 'axios';
 
-const useFetch = () => {
-  const [products, setProducts] = useState([]);
+const useFetch = (url) => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const demoFetchData = async () => {
+  
+  const fetchData = async (url) => {
     try {
-      setTimeout(() => {
-        setProducts(data);
+        const response = await axios.get(
+            API_BASE_URL.concat(url)
+        );
+        console.log("fetched");
+
+        setData(response.data);
         setLoading(false);
-      }, 3000);
-    } catch (err) {
-      console.error(err.message);
+    } catch (error) {
+        console.error(error.message);
+        setError(error);
+        setLoading(false);
     }
-  };
-
-  // const fetchData = async () => {
-  //     try {
-  //         const response = await axios.get(
-  //             `https://api.escuelajs.co/api/v1/products`
-  //         );
-  //         console.log("fetched");
-
-  //         setProducts(response.data);
-  //         setLoading(false);
-  //     } catch (error) {
-  //         console.error(error.message);
-  //         setError(error.message);
-  //         setLoading(false);
-  //     }
-  // };
+};
 
   useEffect(() => {
-    //fetchData();
-    demoFetchData();
-  }, []);
+    fetchData(url);
+    
+  }, [url]);
 
-  return { products, loading, error };
+  return { data, loading, error };
 };
 
 export default useFetch;

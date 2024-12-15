@@ -1,4 +1,4 @@
-@import url(./varibles.css);
+@import url(./variables.css);
 
 body {
   margin: 0;
@@ -13,6 +13,7 @@ body {
 .main-header{
   position: relative;
   top: 0;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -91,26 +92,6 @@ a span.material-symbols-outlined{
 
 
 
-/* Button */
-.btn{
-  all: unset;
-  cursor: pointer;
-  border: solid 1px grey;
-  border-radius: 8px;
-  padding: 8px;
-}
-
-.btn-sea{
-  border: solid 1px var(--sea-border);
-  background-color: var(--sea-bg);
-  color: #fff;
-}
-
-.btn-red{
-  border: solid 1px var(--red-border);
-  background-color: var(--red-bg);
-  color: #fff;
-}
 
 /* hidden */
 .hidden{

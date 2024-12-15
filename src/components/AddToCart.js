@@ -2,20 +2,21 @@ import React from "react";
 import useCart from "../hooks/useCart";
 import Button from "./Button";
 import ControlAmount from "./ControlAmount";
-const AddToCart = ({product}) => {
+const AddToCart = ({id}) => {
   const { dispatch, findProductsInCart } = useCart();
 
-  const productInCart = findProductsInCart(product._id);
+
+  const productInCart = findProductsInCart(id);
+  
   const handleAdd = () => {
-    dispatch({ type: "ADD", payload: product });
+    dispatch({ type: "ADD", payload: id });
   };
 
   const handleInc = () => {
-    console.log(productInCart.amount);
-    dispatch({ type: "INC", payload: productInCart });
+    dispatch({ type: "INC", payload: id });
   };
   const handleDec = () => {
-    dispatch({ type: "DEC", payload: productInCart });
+    dispatch({ type: "DEC", payload: id });
   };
   return (
     <>
@@ -23,7 +24,7 @@ const AddToCart = ({product}) => {
         <ControlAmount
           handleDec={handleDec}
           handleInc={handleInc}
-          amount={productInCart.amount}
+          amount={productInCart.quantity}
         />
       ) : (
         <Button className="btn-sea" onClick={handleAdd}>

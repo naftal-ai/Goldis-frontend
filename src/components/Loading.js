@@ -1,9 +1,12 @@
 import React from 'react'
-
-const Louding = () => {
+import './styles/loading.css'
+const Loading = () => {
   return (
-    <div>Louding...</div>
+    <div className="loading-container">
+      <div className="spinner"></div>
+      <p className="loading-text">Loading...</p>
+    </div>
   )
 }
 
-export default Louding
+export default Loading

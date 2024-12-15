@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 
 const ImageSelector = ({ images }) => {
-  const [selected, setSelcted] = useState(images[0]);
+  const [selected, setSelected] = useState(images[0]);
 
   const handleClick = (e) => {
-    setSelcted(e.target.src);
+    setSelected(e.target.src);
   };
 
   return (
     <div className="image-selector">
       <div className="scroller">
-        {images.map((i) => (
+        {images.map((img, i) => (
           <img
-            src={i}
+          key={i}
+            src={img}
             alt="pic"
             onClick={handleClick}
-            className={selected === i ? "active" : ""}
+            className={selected === img ? "active" : ""}
           />
         ))}
       </div>

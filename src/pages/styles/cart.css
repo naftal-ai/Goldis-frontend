@@ -1,7 +1,7 @@
-@import url(../../varibles.css);
+@import url(../../variables.css);
 
 .cart-page{
-    display:flex; 
+   
 }
 
 .cart-page > ul.products-list{
@@ -19,3 +19,10 @@
     flex-basis: 10%;
     max-width: 40%;
 }
+
+.cart-container{
+    display: flex;
+}
+
+
+/* checkout button */

@@ -1,4 +1,4 @@
-@import url('../../varibles.css');
+@import url('../../variables.css');
 
 
 .product-page{
@@ -25,7 +25,7 @@
     max-width: 100px;
 }
 
-/* size-selctor */
+/* size-selector */
 .size-selector{
     display: flex;
     justify-content: space-around;
@@ -59,7 +59,7 @@
 }
 
 
-/* size-selctor */
+/* size-selector */
 .size-selector{
     display: flex;
     justify-content: space-around;

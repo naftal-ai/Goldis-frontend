@@ -8,27 +8,31 @@ const cartReducer = (state, action) => {
 
   switch (type) {
     case "ADD":
-      newState = [{ p: payload, amount: 1 }, ...state];
+      newState = [{ id: payload, quantity: 1 }, ...state];
+      break;
+
+    case "REMOVE":
+      newState = state.filter(({ id }) => id !== payload);
       break;
 
     case "INC":
-      newState = state.map(({ p, amount }) =>
-        p._id === payload.p._id ? { p, amount: amount + 1 } : { p, amount }
+      newState = state.map(({ id, quantity }) =>
+        id === payload ? { id, quantity: quantity + 1 } : { id, quantity }
       );
       break;
 
     case "DEC":
-      newState = state.map(({ p, amount }) =>
-        p._id === payload.p._id ? { p, amount: amount - 1 } : { p, amount }
+      newState = state.map(({ id, quantity }) =>
+        id === payload ? { id, quantity: quantity - 1 } : { id, quantity }
       );
-      //remove if amount == 0
-      newState = newState.filter(({ amount }) => amount > 0);
+      //remove if quantity == 0
+      newState = newState.filter(({ quantity }) => quantity > 0);
       break;
 
     case "SET_STATE":
       newState = action.payload;
       break;
-      
+
     default:
       console.log("default");
       return state;

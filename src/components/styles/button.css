@@ -1,0 +1,44 @@
+/* Button */
+.btn{
+    all: unset;
+    cursor: pointer;
+    border: solid 1px grey;
+    border-radius: 8px;
+    margin: auto;
+    padding: 8px;
+    margin: 10px;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .btn-sea{
+    border: solid 1px var(--sea-border);
+    background-color: var(--sea-bg);
+    color: #fff;
+  }
+  
+  .btn-red{
+    border: solid 1px var(--red-border);
+    background-color: var(--red-bg);
+    color: #fff;
+  }
+  
+  .btn-green{
+    border: solid 1px var(--green-border);
+    background-color: var(--green-bg);
+    color: #fff;
+  }
+  
+  .btn-submit{
+    width: 90%;
+    padding: 10px;
+    background-color: var(--submit-bg);
+    color: white;
+    border: none;
+    border-radius: 5px;
+   }
+ 
+
+  .btn-submit:hover {
+    background-color: #0056b3;
+  }

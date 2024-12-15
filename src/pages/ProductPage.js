@@ -1,44 +1,46 @@
 import React from "react";
-import useProducts from "../hooks/useProducts.js";
-import { useParams } from "react-router-dom";
-import ImageSelector from "../components/ImageSelctor.js";
-import Loading from "../components/Loading.js";
-import SizeSelector from "../components/SizeSelector.js";
-import "./styles/product.css";
-import AddToCart from "../components/AddToCart.js";
 
+import { useParams } from "react-router-dom";
+import useProducts from "../hooks/useProducts.js";
+
+import ImageSelector from "../components/ImageSelector.js";
+import SizeSelector from "../components/SizeSelector.js";
+import AddToCart from "../components/AddToCart.js";
+import Error from "../components/Error.js";
+
+import "./styles/product.css";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const { products, loading } = useProducts();
-  const sizes = [
-    {size: 'XS', available: false},
-    {size: 'S', available: true},
-    {size: 'M', available: true},
-    {size: 'L', available: false},
-    {size: 'XL', available: true},
-  ]
+  const { getProductById } = useProducts();
+  const product = getProductById(id);
 
-  const product = products.filter((p) => p.id === +id)[0];
+  const sizes = [
+    { size: "XS", available: false },
+    { size: "S", available: true },
+    { size: "M", available: true },
+    { size: "L", available: false },
+    { size: "XL", available: true },
+  ];
 
   return (
     <div className="product-page">
-      {loading ? (
-        <Loading />
-      ) : (
+      {product ? (
         <>
           <div className="description">
-            <h1>{product.title}</h1>
+            <h1>{product.name}</h1>
             <p>{product.description}</p>
             <hr />
-            <SizeSelector sizes={sizes}/>
+            <SizeSelector sizes={sizes} />
             <hr />
-            <AddToCart product={product} />
+            <AddToCart id={id} />
           </div>
           <div className="images">
             <ImageSelector images={product.images} />
           </div>
         </>
+      ) : (
+        <Error errMsg={"cannot find the product!"} />
       )}
     </div>
   );
