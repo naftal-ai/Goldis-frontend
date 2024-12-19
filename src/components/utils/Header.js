@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "./NavBar";
-import logo from "../assets/AbstractDesign-5_Gpi5_9.svg";
+import logo from "../../assets/AbstractDesign-5_Gpi5_9.svg";
 
 const Header = () => {
   return (

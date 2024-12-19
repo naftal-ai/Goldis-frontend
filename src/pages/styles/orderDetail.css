@@ -1,4 +1,4 @@
-
+@import url('../../variables.css');
 
 .order-detail {
     padding: 20px;
@@ -7,7 +7,7 @@
 
 h1 {
     font-size: 24px;
-    color: #333;
+    color: var(--text-color);
     margin-bottom: 20px;
 }
 
@@ -18,12 +18,6 @@ h1 {
     margin-top: 20px;
 }
 
-.loading {
-    font-size: 18px;
-    color: #666;
-    text-align: center;
-    margin-top: 20px;
-}
 
 .products-table {
     width: 100%;
@@ -35,6 +29,7 @@ h1 {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
+    
 }
 
 .products-table th {
@@ -50,15 +45,19 @@ h1 {
     background-color: #f1f1f1;
 }
 
-.update-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
+.products-table th,
+.products-table td {
+    text-align: center;
 }
 
-.update-button:hover {
-    background-color: #218838;
+.products-table img {
+    max-width: 70px;
+    height: auto;
+    border-radius: 2px;
 }
+
+.products-table img:hover {
+    transform: scale(1.5);
+    z-index: 10;
+    position: relative;
+} 

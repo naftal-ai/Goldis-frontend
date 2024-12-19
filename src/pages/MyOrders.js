@@ -5,28 +5,22 @@ import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../lib/Constants';
 
 
-import Loading from '../components/Loading.js';
-import Button from '../components/Button.js';
-import useAuth from '../hooks/useAuth.js';
+import Loading from '../components/utils/Loading.js';
+import Button from '../components/forms/Button.js';
+
 import './styles/myOrders.css';
 
 const MyOrders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const {setIsLoggedIn, isValidToken} = useAuth();
     const navigate = useNavigate();
-    const token = localStorage.getItem('jwtToken');
-   
-
+    
+    
     useEffect(() => {
-        // Fetch user's orders from the backend
-        const fetchOrders = async () => {
-            if(!token || !isValidToken(token)){
-                setIsLoggedIn(false)
-                navigate('/login');
-            }
-
+        
+        const fetchOrders = async () => {  
             try {
+                const token = localStorage.getItem('jwtToken');
                 const response = await axios.get(`${API_BASE_URL}/orders`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -34,13 +28,12 @@ const MyOrders = () => {
             } catch (error) {
                 console.error('Error fetching orders:', error);
                 if (error.response && error.response.status === 401) {
-                    navigate('/login'); // Redirect to login if not authenticated
+                    navigate('/login'); 
                 }
             } finally {
                 setLoading(false);
             }
         };
-
         fetchOrders();
     }, [navigate]);
 
@@ -58,7 +51,6 @@ const MyOrders = () => {
             response = await axios.get(`${API_BASE_URL}/orders`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            console.log(response.data)
             setOrders(response.data);
         } catch (error) {
             console.error('Error reactivating order:', error);
@@ -68,7 +60,7 @@ const MyOrders = () => {
     
 
     const handleViewOrder = (orderId) => {
-        navigate(`/orders/${orderId}`); // Navigate to order detail page
+        navigate(`/orders/${orderId}`); 
     };
 
     if (loading) {

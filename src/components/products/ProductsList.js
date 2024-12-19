@@ -1,8 +1,8 @@
 import React from "react";
 import { useOutletContext } from "react-router-dom";
 import ProductCard from "./ProductCard";
-import Loading from "./Loading";
-import useProducts from "../hooks/useProducts";
+import Loading from "../utils/Loading";
+import useProducts from "../../hooks/useProducts";
 
 
 const ProductsList = ({ category }) => {

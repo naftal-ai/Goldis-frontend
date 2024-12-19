@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/orderDetail.css"; // Assuming a CSS file for styling
 import { API_BASE_URL } from "../lib/Constants";
+import Loading from "../components/utils/Loading";
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -31,30 +32,10 @@ const OrderDetail = () => {
 
     fetchOrder();
   }, [id, navigate]);
-
-  //only if the status is pending
-  const handleUpdateProduct = async (productId, quantity) => {
-    try {
-      const token = localStorage.getItem("jwtToken");
-      await axios.put(
-        `${API_BASE_URL}/orders/${id}/products/${productId}`,
-        { quantity },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert("Product updated successfully.");
-      // Optionally refetch order details
-      const response = await axios.get(`${API_BASE_URL}/orders/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setOrder(response.data);
-    } catch (error) {
-      console.error("Error updating product:", error);
-      alert("Failed to update product.");
-    }
-  };
+  
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return <Loading />;
   }
 
   if (!order) {
@@ -84,7 +65,7 @@ const OrderDetail = () => {
             <th>Product Name</th>
             <th>Quantity</th>
             <th>Price</th>
-            <th>Actions</th>
+            <th>Image</th>
           </tr>
         </thead>
         <tbody>
@@ -93,24 +74,7 @@ const OrderDetail = () => {
               <td>{product.name}</td>
               <td>{quantity}</td>
               <td>${product.price}</td>
-              <td>
-                {order.status === "pending" && (
-                  <button
-                    className="update-button"
-                    onClick={() => {
-                      const newQuantity = parseInt(
-                        prompt("Enter new quantity:", quantity),
-                        10
-                      );
-                      if (newQuantity > 0) {
-                        handleUpdateProduct(product._id, newQuantity);
-                      }
-                    }}
-                  >
-                    Update Quantity
-                  </button>
-                )}
-              </td>
+              <td><img src={product?.images[0]} alt="product-image" /></td>
             </tr>
           ))}
         </tbody>

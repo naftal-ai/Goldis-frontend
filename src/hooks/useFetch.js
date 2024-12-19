@@ -8,7 +8,7 @@ const useFetch = (url) => {
   const [error, setError] = useState(null);
 
   
-  const fetchData = async (url) => {
+  const fetchData = async () => {
     try {
         const response = await axios.get(
             API_BASE_URL.concat(url)

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from "../lib/Constants.js";
 import { useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth.js";
-import Error from "../components/Error.js";
+import Error from "../components/utils/Error.js";
 import InfoPage from "./InfoPage.js";
-import Button from "../components/Button.js";
-import Loading from "../components/Loading.js";
+import Button from "../components/forms/Button.js";
+import Loading from "../components/utils/Loading.js";
 
-const Login = () => {
+const Login = ({ url = "/" }) => {
   const location = useLocation();
   const { isLoggedIn, setIsLoggedIn } = useAuth();
 
@@ -16,12 +16,17 @@ const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  console.log(location)
   //get the data from signup if navigated from there
   useEffect(() => {
     if (location.state) {
       setEmail(location.state);
     }
   }, [location.state]);
+
+  //get the path from where user redirect
+  const params = new URLSearchParams(location.search);
+  const redirect = params.get("redirect");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,13 +59,13 @@ const Login = () => {
   return (
     <div style={styles.container}>
       {isLoggedIn ? (
-        <InfoPage message={"logged in successfully!"} />
+        <InfoPage message={"logged in successfully!"} url={redirect ? redirect : url} />
       ) : loading ? (
         <Loading />
-      ) :(
+      ) : (
         <form onSubmit={handleSubmit} style={styles.form}>
           <h2 style={styles.heading}>Login</h2>
-          {error && <Error errMsg={error} setErrMsg={setError} />}
+          {error.length > 0 && <Error errMsg={error} setErrMsg={setError} />}
           <div style={styles.inputGroup}>
             <label htmlFor="email" style={styles.label}>
               Email
@@ -89,23 +94,14 @@ const Login = () => {
               required
             />
           </div>
-        
+
           <Button type="submit" className="btn-submit">
             Sign Up
           </Button>
-        
         </form>
       )}
     </div>
   );
-};
-
-export const Logout = () => {
-  const { setIsLoggedIn } = useAuth();
-
-  localStorage.removeItem("jwtToken");
-  setIsLoggedIn(false);
-  return <InfoPage message={"logged out successfully"} />;
 };
 
 const styles = {
@@ -146,7 +142,7 @@ const styles = {
     border: "1px solid #ddd",
     borderRadius: "5px",
     fontSize: "16px",
-  }
+  },
 };
 
 export default Login;

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import useCategories from "../hooks/useCategories.js";
+import useCategories from "../../hooks/useCategories.js";
 
 const CategoriesNavBar = () => {
   const { loading, error, categories } = useCategories();

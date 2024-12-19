@@ -37,6 +37,13 @@
     border: none;
     border-radius: 5px;
    }
+
+   .btn-checkout{
+    border: solid 1px var(--green-border);
+    background-color: var(--green-bg);
+    color: #fff;
+    width: 60%;
+   }
  
 
   .btn-submit:hover {

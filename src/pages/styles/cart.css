@@ -1,28 +1,35 @@
 @import url(../../variables.css);
 
 .cart-page{
-   
+   margin: 20px auto;
 }
-
-.cart-page > ul.products-list{
-    flex-grow: 3;
-    flex-basis: 60%;
-    max-width: 80%;
-    margin: 20px;
-    gap: 15px;
-}
-
-
-
-.cart-page > ul.actions{
-    flex-grow: 2;
-    flex-basis: 10%;
-    max-width: 40%;
-}
-
 .cart-container{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-list{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 15px;
+    gap: 25px;
+    justify-content: center;
+}
+
+.checkout{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 
-/* checkout button */
+
+
+
+
+
+

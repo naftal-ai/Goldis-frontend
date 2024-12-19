@@ -3,10 +3,10 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import useProducts from "../hooks/useProducts.js";
 
-import ImageSelector from "../components/ImageSelector.js";
-import SizeSelector from "../components/SizeSelector.js";
-import AddToCart from "../components/AddToCart.js";
-import Error from "../components/Error.js";
+import ImageSelector from "../components/products/ImageSelector.js";
+import SizeSelector from "../components/products/SizeSelector.js";
+import AddToCart from "../components/products/AddToCart.js";
+import Error from "../components/utils/Error.js";
 
 import "./styles/product.css";
 

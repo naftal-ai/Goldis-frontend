@@ -1,8 +1,8 @@
 import React, { useState} from "react";
 import { Outlet } from "react-router-dom";
-import CategoriesNavBar from "../components/CategoriesNavBar";
+import CategoriesNavBar from "../components/products/CategoriesNavBar.js";
 import './styles/products.css';
-import Search from '../components/Search';
+import Search from '../components/products/Search.js';
 
 const Products = () => {
   const [searchValue, setSearchValue] = useState("");

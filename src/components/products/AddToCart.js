@@ -1,7 +1,7 @@
 import React from "react";
-import useCart from "../hooks/useCart";
-import Button from "./Button";
-import ControlAmount from "./ControlAmount";
+import useCart from "../../hooks/useCart";
+import Button from "../forms/Button";
+
 const AddToCart = ({id}) => {
   const { dispatch, findProductsInCart } = useCart();
 
@@ -34,5 +34,16 @@ const AddToCart = ({id}) => {
     </>
   );
 };
+
+const ControlAmount = ({handleDec, handleInc, amount}) => {
+  
+  return (
+    <div className='control-amount'>
+        <div className='btn btn-sea inc' onClick={handleInc}>+</div>
+        <div className='amount'>{amount}</div>
+        <div className='btn btn-red dec' onClick={handleDec}>-</div>
+    </div>
+  )
+}
 
 export default AddToCart;

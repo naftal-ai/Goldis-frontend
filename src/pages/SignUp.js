@@ -4,9 +4,9 @@ import axios from "axios";
 import { API_BASE_URL } from "../lib/Constants";
 import { useNavigate } from "react-router-dom";
 
-import Button from "../components/Button";
-import Error from "../components/Error";
-import Loading from "../components/Loading";
+import Button from "../components/forms/Button";
+import Error from "../components/utils/Error";
+import Loading from "../components/utils/Loading";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -43,17 +43,13 @@ const SignUp = () => {
     console.log("Form Submitted:", { ...formData, address });
     axios
       .post(`${API_BASE_URL}/user/signup`, { ...formData, address })
-      .then(function (response) {
-        //redirect to login page
+      .then(function () {
         setLoading(false);
-        console.log(response);
         navigator("/login", { state: formData.email });
       })
       .catch(function (error) {
-        console.log(error);
         setLoading(false);
         setErrorMsg(error.response?.data?.message || error.message);
-        
         setTimeout(() => setErrorMsg(""), 10000);
       });
   };
@@ -68,7 +64,7 @@ const SignUp = () => {
 
           <form onSubmit={handleSubmit} className="sign-up-form">
             {errorMsg.length > 0 && (
-             <Error ref={errorRef} errMsg={errorMsg} setErrMsg={setErrorMsg} />
+             <Error errMsg={errorMsg} setErrMsg={setErrorMsg}/>
               
             )}
             <div className="form-group">
