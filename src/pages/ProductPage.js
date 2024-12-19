@@ -33,7 +33,7 @@ const ProductPage = () => {
             <hr />
             <SizeSelector sizes={sizes} />
             <hr />
-            <AddToCart id={id} />
+            <AddToCart id={id} stock={product.stock}/>
           </div>
           <div className="images">
             <ImageSelector images={product.images} />

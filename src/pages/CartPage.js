@@ -7,13 +7,14 @@ import useProducts from "../hooks/useProducts.js";
 import Button from "../components/forms/Button.js";
 import ProductCard from "../components/products/ProductCard.js";
 import Error from "../components/utils/Error.js";
-
 import InfoPage from "./InfoPage.js";
+
 
 const CartPage = () => {
   const [errMsg, setErrMsg] = useState("")
   const { state, calculateTotalPrice, handleCheckout } = useCart();
   const { getProductById } = useProducts();
+  
 
   const total = calculateTotalPrice();
 

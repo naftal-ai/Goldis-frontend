@@ -6,6 +6,7 @@ const InfoPage = ({ message, url='/' }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(url)
     const timer = setTimeout(navigate, 3000, url, { replace: true });
 
     return () => clearTimeout(timer);

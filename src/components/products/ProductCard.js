@@ -41,7 +41,7 @@ const ProductCard = ({ product }) => {
       <Info />
       <div className="price-button">
         <Price />
-        <AddToCart id={product._id} />
+        <AddToCart id={product._id} stock={product.stock}/>
       </div>
     </>
   );

@@ -8,12 +8,21 @@ const useProducts = () => {
         const cachedProduct = products.find((product) => id === product._id);
         return cachedProduct;
       }
+    const availableProduct = (id, quantity=0) => {
+        const product = getProductById(id);
+        if (!product) {
+          return false;
+        }
+        return product.stock - quantity >= 0;
+      }
 
     return {
         products, 
         loading,
         error,
         getProductById
+        ,
+       availableProduct
     };
 }
 

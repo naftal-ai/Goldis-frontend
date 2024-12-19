@@ -53,29 +53,32 @@ const useCart = () => {
       Authorization: `Bearer ${token}`,
     };
 
-    axios
-      .post(`${API_BASE_URL}/orders`, body, { headers: headers })
-      .then(function (response) {
-        window.location = response.data.sessionUrl;
-      })
-      .catch(function (error) {
-        const { statusText } = error.response
-        switch (statusText) {
-          case "Unauthorized":
-            logout();
-            navigateToLogin();
-            break;
-          case "Stock Conflict":
-            console.log(error.response.data.details)
-            break;
-          case "Internal Server Error":
-            alert("Server error");
-            break;
-          default:
-            alert("not handle error");
-            break;
-        }
+    try {
+      const response = await axios.post(`${API_BASE_URL}/orders`, body, {
+        headers: headers,
       });
+
+      window.location = response.data.sessionUrl;
+    } catch (error) {
+      const { statusText } = error.response;
+      switch (statusText) {
+        case "Unauthorized":
+          logout();
+          navigateToLogin();
+          break;
+        case "Stock Conflict":
+          console.log(error.response.data.details);
+          break;
+        case "Internal Server Error":
+          alert("Server error");
+          break;
+        default:
+          alert("not handle error");
+          break;
+      }
+    } finally {
+      cleanCart();
+    }
   };
 
   const cleanCart = () => dispatch({ type: "SET_STATE", payload: [] });

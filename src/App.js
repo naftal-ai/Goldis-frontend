@@ -25,6 +25,7 @@ import ProductsList from "./components/products/ProductsList.js";
 
 const App = () => {
   const { categories } = useCategories();
+
   
   return (
     <>
