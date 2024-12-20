@@ -24,7 +24,7 @@ const ProductPage = () => {
   ];
 
   return (
-    <div className="product-page">
+    <div className="product-page page">
       {product ? (
         <>
           <div className="description">

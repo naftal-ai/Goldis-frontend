@@ -91,7 +91,13 @@ a span.material-symbols-outlined{
 }
 
 
-
+/* Page */
+.page{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* hidden */
 .hidden{

@@ -13,7 +13,6 @@ const AddToCart = ({ id, stock }) => {
     setAvailableProduct(stock > 0 && (!quantity || quantity < stock));
   }, [stock, id, findProductsInCart, quantity]);
 
-
   const handleAdd = () => {
     if (!availableProduct) {
       showNotification("Product out of stock");
@@ -25,7 +24,8 @@ const AddToCart = ({ id, stock }) => {
   const handleInc = () => {
     if (!availableProduct) {
       showNotification("Product out of stock");
-      return;}
+      return;
+    }
     dispatch({
       type: "INC",
       payload: { id, quantity: quantity + 1 },
@@ -35,7 +35,8 @@ const AddToCart = ({ id, stock }) => {
     dispatch({ type: "DEC", payload: id });
   };
   return (
-    <>
+    <div style={style.container}>
+      {!availableProduct && <span style={style.notAvailable}>not available</span>}
       {quantity ? (
         <ControlAmount
           handleDec={handleDec}
@@ -43,18 +44,11 @@ const AddToCart = ({ id, stock }) => {
           amount={quantity}
         />
       ) : (
-        <Button
-          className="btn-sea"
-          onClick={
-            availableProduct
-              ? handleAdd
-              : () => showNotification("Product out of stock")
-          }
-        >
+        <Button className="btn-sea" onClick={handleAdd}>
           <span>Add to cart</span>
         </Button>
       )}
-    </>
+    </div>
   );
 };
 
@@ -82,5 +76,20 @@ const ControlAmount = ({ handleDec, handleInc, amount, available = true }) => {
     </div>
   );
 };
+
+const style = {
+  container: {
+    position: "relative"
+  },
+  notAvailable: {
+    position: 'absolute',
+    top: '0',
+    wright: '0',
+    padding: '4px',
+    borderRadius: '4px',
+    backgroundColor: "#FDE74C",
+    color: "#404E4D"
+  }
+}
 
 export default AddToCart;

@@ -37,26 +37,7 @@ const MyOrders = () => {
         fetchOrders();
     }, [navigate]);
 
-    const handleReactivateOrder = async (orderId) => {
-        try {
-            const token = localStorage.getItem('jwtToken');
-           let response =  await axios.post(
-                `${API_BASE_URL}/orders/${orderId}/reactivate`,
-                {},
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            alert('Order reactivation initiated. Please complete the payment.');
-            window.location = response.data.sessionUrl;
-            // Optionally refetch orders to update the status
-            response = await axios.get(`${API_BASE_URL}/orders`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setOrders(response.data);
-        } catch (error) {
-            console.error('Error reactivating order:', error);
-            alert('Failed to reactivate the order.');
-        }
-    };  
+   
     
 
     const handleViewOrder = (orderId) => {
@@ -92,15 +73,7 @@ const MyOrders = () => {
                                     <Button className="view-button" onClick={() => handleViewOrder(order._id)}>
                                         View
                                     </Button>
-                                    {(order.status === 'pending') && (
-                                        <Button
-                                            className="reactivate-button"
-                                            onClick={() => handleReactivateOrder(order._id)}
-                                        >
-                                            Reactivate
-                                        </Button>
-
-                                    )}
+                                    
                                 </td>
                             </tr>
                         ))}

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./Notification.css";
+import "../styles/Notification.css";
 import useNotification from "../../hooks/useNotification";
 import Button from "../forms/Button";
 

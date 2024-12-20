@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import AddToCart from "./AddToCart";
 
 const ProductCard = ({ product }) => {
- 
   const { _id, name, description, images, price, category } = product;
 
   const ProductImg = () => (
@@ -26,14 +25,17 @@ const ProductCard = ({ product }) => {
   const Info = () => (
     <div className="product-info">
       <h3 className="product-title">{name}</h3>
-      <p className="product-description">
-        {description.substring(0, 20)}...
-        <Link to={`/product-page/${_id}`}>
-          <b> read more</b>
-        </Link>
-      </p>
+      {description && (
+        <p className="product-description">
+          {description.substring(0, 20)}...
+          <Link to={`/product-page/${_id}`}>
+            <b> read more</b>
+          </Link>
+        </p>
+      )}
       <span className="category-label">{category.name}</span>
-    </div>);
+    </div>
+  );
 
   return (
     <>
@@ -41,7 +43,7 @@ const ProductCard = ({ product }) => {
       <Info />
       <div className="price-button">
         <Price />
-        <AddToCart id={product._id} stock={product.stock}/>
+        <AddToCart id={product._id} stock={product.stock} />
       </div>
     </>
   );

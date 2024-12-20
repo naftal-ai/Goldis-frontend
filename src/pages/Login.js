@@ -96,7 +96,7 @@ const Login = ({ url = "/" }) => {
           </div>
 
           <Button type="submit" className="btn-submit">
-            Sign Up
+            Sign in
           </Button>
         </form>
       )}
