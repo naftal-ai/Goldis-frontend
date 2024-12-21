@@ -36,15 +36,15 @@ const AddToCart = ({ id, stock }) => {
   };
   return (
     <div style={style.container}>
-      {!availableProduct && <span style={style.notAvailable}>not available</span>}
       {quantity ? (
         <ControlAmount
-          handleDec={handleDec}
-          handleInc={handleInc}
-          amount={quantity}
+        handleDec={handleDec}
+        handleInc={handleInc}
+        amount={quantity}
         />
       ) : (
         <Button className="btn-sea" onClick={handleAdd}>
+          {!availableProduct && <span style={style.notAvailable}>not available</span>}
           <span>Add to cart</span>
         </Button>
       )}
