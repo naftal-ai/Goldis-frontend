@@ -6,7 +6,6 @@ const useFetch = (url) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   
   const fetchData = async () => {
     try {
@@ -29,7 +28,7 @@ const useFetch = (url) => {
     
   }, [url]);
 
-  return { data, loading, error };
+  return { data, loading, error, refetch: fetchData };
 };
 
 export default useFetch;

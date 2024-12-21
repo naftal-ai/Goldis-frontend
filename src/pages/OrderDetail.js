@@ -4,15 +4,15 @@ import axios from "axios";
 import "./styles/orderDetail.css";
 import { API_BASE_URL } from "../lib/Constants";
 import Loading from "../components/utils/Loading";
-import useNotification from "../hooks/useNotification";
 import Button from "../components/forms/Button.js";
+import useOrders from "../hooks/useOrders";
 
 const OrderDetail = () => {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { showNotification } = useNotification();
+  const { reactivateOrder, loading: ordersLoading } = useOrders();
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -38,23 +38,14 @@ const OrderDetail = () => {
 
   const handleReactivateOrder = async (orderId) => {
     try {
-      setLoading(true);
-      const token = localStorage.getItem("jwtToken");
-      let response = await axios.post(
-        `${API_BASE_URL}/orders/${orderId}/reactivate`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      window.location = response.data.sessionUrl;
+      await reactivateOrder(orderId);
     } catch (error) {
-      setLoading(false);
       console.error("Error reactivating order:", error);
       alert("Failed to reactivate the order.");
     }
   };
 
-  if (loading) {
+  if (loading || ordersLoading) {
     return <Loading />;
   }
 

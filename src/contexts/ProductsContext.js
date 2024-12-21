@@ -6,11 +6,11 @@ export const ProductsContext = createContext();
 
 //Context Provider
 export const ProductsProvider = ({ children }) => {
-  const { data: products, loading, error } = useFetch('/products');
+  const { data: products, loading, error, refetch} = useFetch('/products');
   
   
   return (
-    <ProductsContext.Provider value={{products, error, loading}}>
+    <ProductsContext.Provider value={{products, error, loading, refetch}}>
       {children}
     </ProductsContext.Provider>
   );

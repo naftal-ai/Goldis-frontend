@@ -1,22 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import "./styles/cart.css";
 
 import useCart from "../hooks/useCart.js";
 import useProducts from "../hooks/useProducts.js";
+import useOrders from "../hooks/useOrders.js";
 
+import Loading from "../components/utils/Loading.js";
 import Button from "../components/forms/Button.js";
 import ProductCard from "../components/products/ProductCard.js";
-import Error from "../components/utils/Error.js";
+
 import InfoPage from "./InfoPage.js";
 
 
 const CartPage = () => {
-  const [errMsg, setErrMsg] = useState("")
-  const { state, calculateTotalPrice, handleCheckout } = useCart();
-  const { getProductById } = useProducts();
   
+  const { state, calculateTotalPrice } = useCart();
+  const { handleCheckout, loading } = useOrders();
+  const { getProductById } = useProducts();
+
+
+ 
 
   const total = calculateTotalPrice();
+
+ if(loading){
+   return <Loading />
+ }
 
   return (
     <div className="cart-page">
@@ -45,7 +54,7 @@ const CartPage = () => {
             <h2>
               Total price: <span>{total}$</span>
             </h2>
-            <Button className="btn btn-checkout" onClick={handleCheckout}>
+            <Button className="btn btn-checkout" onClick={() => handleCheckout(state)}>
               Checkout
             </Button>
             {}

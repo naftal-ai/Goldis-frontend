@@ -1,17 +1,12 @@
 import { useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
+
 import useProducts from "./useProducts.js";
-import useAuth from "./useAuth.js";
-import axios from "axios";
-import { API_BASE_URL } from "../lib/Constants";
-import { useNavigate, useLocation } from "react-router-dom";
+
 
 const useCart = () => {
   const { state, dispatch } = useContext(CartContext);
   const { getProductById } = useProducts();
-  const { logout, isValidToken } = useAuth();
-  const navigator = useNavigate();
-  const location = useLocation();
 
   //Utilities
   const findProductsInCart = (_id) => {
@@ -32,62 +27,24 @@ const useCart = () => {
     }
   };
 
-  //maybe should be in a separate hook 'useOrders'
-  const handleCheckout = async () => {
-    const navigateToLogin = () => {
-      logout();
-      return navigator(
-        `/login?redirect=${encodeURIComponent(location.pathname)}`
-      );
-    };
+  const checkAllAvailable = () => {
+    const unavailableProducts = state.filter(({ id, quantity }) => {
+      return !getProductById(id) || !getProductById(id).stock - quantity >= 0;
+    });
 
-    //check the token is valid
-    const token = localStorage.getItem("jwtToken");
-    if (!token || !isValidToken(token)) {
-      navigateToLogin();
-    }
-
-    const body = { items: state };
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-
-    try {
-      const response = await axios.post(`${API_BASE_URL}/orders`, body, {
-        headers: headers,
-      });
-
-      window.location = response.data.sessionUrl;
-    } catch (error) {
-      const { statusText } = error.response;
-      switch (statusText) {
-        case "Unauthorized":
-          logout();
-          navigateToLogin();
-          break;
-        case "Stock Conflict":
-          console.log(error.response.data.details);
-          break;
-        case "Internal Server Error":
-          alert("Server error");
-          break;
-        default:
-          alert("not handle error");
-          break;
-      }
-    } finally {
-      cleanCart();
-    }
-  };
+    return unavailableProducts;
+  }
 
   const cleanCart = () => dispatch({ type: "SET_STATE", payload: [] });
+
+ 
+
   return {
     state,
     dispatch,
     findProductsInCart,
     calculateTotalPrice,
-    handleCheckout,
+    checkAllAvailable,
     cleanCart,
   };
 };

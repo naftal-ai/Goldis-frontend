@@ -16,14 +16,14 @@ root.render(
     <BrowserRouter>
       <NotificationProvider>
         <AuthProvider>
-          <ProductsProvider>
-            <CartProvider>
-              <CategoriesProvider>
+          <CategoriesProvider>
+            <ProductsProvider>
+              <CartProvider>
                 <App />
                 <Notification />
-              </CategoriesProvider>
-            </CartProvider>
-          </ProductsProvider>
+              </CartProvider>
+            </ProductsProvider>
+          </CategoriesProvider>
         </AuthProvider>
       </NotificationProvider>
     </BrowserRouter>

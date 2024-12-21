@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ProductsContext } from "../contexts/ProductsContext";
 
 const useProducts = () => {
-    const {products, loading, error} = useContext(ProductsContext);
+    const {products, loading, error, refetch} = useContext(ProductsContext);
 
     const getProductById = (id) => {
         const cachedProduct = products.find((product) => id === product._id);
@@ -20,8 +20,8 @@ const useProducts = () => {
         products, 
         loading,
         error,
-        getProductById
-        ,
+        getProductById,
+        refetch,
        availableProduct
     };
 }

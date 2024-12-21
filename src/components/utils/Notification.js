@@ -18,10 +18,10 @@ const Notification = () => {
 
 
   if (notification) {
-    const { message, actions } = notification || {};
+    const { message, actions, type } = notification || {};
     return (
       <div className="notification-container">
-        <div className="notification">
+        <div className={`notification ${type}`}>
           {message}
           {actions.map(({ label, action }) => (
             <Button
