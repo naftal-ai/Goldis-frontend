@@ -1,39 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+
 import "./styles/orderDetail.css";
-import { API_BASE_URL } from "../lib/Constants";
+
 import Loading from "../components/utils/Loading";
 import Button from "../components/forms/Button.js";
 import useOrders from "../hooks/useOrders";
+import OrderTable from "../components/orders/OrderTable";
 
 const OrderDetail = () => {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [updatedDetails, setUpdatedDetails] = useState({});
+  const [changed, setChanged] = useState(false);
   const navigate = useNavigate();
-  const { reactivateOrder, loading: ordersLoading } = useOrders();
+  const { fetchOrder, reactivateOrder, loading, updateOrder, deleteOrder } =
+    useOrders();
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const token = localStorage.getItem("jwtToken");
-        const response = await axios.get(`${API_BASE_URL}/orders/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        console.log(response.data);
-        setOrder(response.data);
-      } catch (error) {
+    fetchOrder(id)
+      .then((order) => {
+        setOrder(order);
+        console.log(order);
+      })
+      .catch((error) => {
         console.error("Error fetching order:", error);
-        if (error.response && error.response.status === 401) {
-          navigate("/login");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrder();
+      });
   }, [id, navigate]);
 
   const handleReactivateOrder = async (orderId) => {
@@ -45,7 +37,16 @@ const OrderDetail = () => {
     }
   };
 
-  if (loading || ordersLoading) {
+  const handleUpdateOrder = async () => {
+    try {
+      await updateOrder(order._id, updatedDetails);
+    } catch (error) {
+      console.error("Error updating order:", error);
+      alert("Failed to update the order.");
+    }
+  };
+
+  if (loading) {
     return <Loading />;
   }
 
@@ -70,37 +71,35 @@ const OrderDetail = () => {
       </p>
 
       <h2>Products</h2>
-      <table className="products-table">
-        <thead>
-          <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Image</th>
-          </tr>
-        </thead>
-        <tbody>
-          {order.products.map(({ product, quantity }) => (
-            <tr key={product._id}>
-              <td>{product.name}</td>
-              <td>{quantity}</td>
-              <td>${product.price}</td>
-              <td>
-                <img src={product?.images[0]} alt="product-image" />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {console.log(order.products)}
+      <OrderTable
+        order={order.products}
+        setUpdatedDetails={setUpdatedDetails}
+        updatedDetails={updatedDetails}
+      />
       <div style={{ marginTop: "20px", textAlign: "center" }}>
-      {order.status === "pending" && (
-        <Button
-          className="btn-checkout"
-          onClick={() => handleReactivateOrder(order._id)}
-        >
-          Reactivate
-        </Button>
-      )}
+        {order.status === "pending" && (
+          <>
+            {changed ? (
+              <Button className="btn-checkout" onClick={handleUpdateOrder}>
+                Update Order
+              </Button>
+            ) : (
+              <Button
+                className="btn-checkout"
+                onClick={() => handleReactivateOrder(order._id)}
+              >
+                Reactivate
+              </Button>
+            )}
+            <Button
+              className="btn-delete"
+              onClick={() => deleteOrder(order._id)}
+            >
+              Delete
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

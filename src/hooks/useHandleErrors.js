@@ -60,7 +60,7 @@ const useHandleErrors = () => {
         alert("Server error");
         break;
       default:
-        alert("Unhandled error");
+        showNotification(`An error occurred ${error?.response?.data?.message || error.message || ''}`,[], "error");
         break;
     }
   };
