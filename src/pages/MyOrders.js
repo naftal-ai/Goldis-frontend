@@ -1,10 +1,11 @@
 // MyOrders.js
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { API_BASE_URL } from "../lib/Constants";
+
+// Hooks
 import useOrders from "../hooks/useOrders.js";
 
+// Components
 import Loading from "../components/utils/Loading.js";
 import Button from "../components/forms/Button.js";
 
@@ -20,7 +21,7 @@ const MyOrders = () => {
     fetchOrders()
       .then((data) => setOrders(data))
       .catch((error) => console.error(error));
-  }, [navigate, trigger]);
+  }, [navigate, trigger, fetchOrders]);
 
   const handleViewOrder = (orderId) => {
     navigate(`/orders/${orderId}`);

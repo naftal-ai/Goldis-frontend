@@ -6,7 +6,6 @@ import "./styles/orderDetail.css";
 import Loading from "../components/utils/Loading";
 import Button from "../components/forms/Button.js";
 import useOrders from "../hooks/useOrders";
-import OrderTable from "../components/orders/OrderTable";
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -21,12 +20,11 @@ const OrderDetail = () => {
     fetchOrder(id)
       .then((order) => {
         setOrder(order);
-        console.log(order);
       })
       .catch((error) => {
         console.error("Error fetching order:", error);
       });
-  }, [id, navigate]);
+  }, [id, navigate, fetchOrder]);
 
   const handleReactivateOrder = async (orderId) => {
     try {
@@ -38,12 +36,21 @@ const OrderDetail = () => {
   };
 
   const handleUpdateOrder = async () => {
-    try {
-      await updateOrder(order._id, updatedDetails);
-    } catch (error) {
-      console.error("Error updating order:", error);
-      alert("Failed to update the order.");
-    }
+    await updateOrder(order._id, updatedDetails);
+    setChanged(false);
+  };
+
+  const handleDeleteOrder = async (orderId) => {
+    await deleteOrder(orderId);
+    navigate("/my-orders");
+  };
+
+  const handleQuantityChange = (productId, newQuantity) => {
+    setUpdatedDetails((prevDetails) => ({
+      ...prevDetails,
+      [productId]: newQuantity,
+    }));
+    setChanged(true);
   };
 
   if (loading) {
@@ -54,9 +61,8 @@ const OrderDetail = () => {
     return <div className="no-order">Order not found.</div>;
   }
 
-  return (
-    <div className="order-detail">
-      <h1>Order Details</h1>
+  const OrderData = (
+    <>
       <p>
         <strong>Order ID:</strong> {order._id}
       </p>
@@ -69,14 +75,56 @@ const OrderDetail = () => {
       <p>
         <strong>Created at:</strong> {Date(order.createdAt).toString()}
       </p>
+    </>
+  );
 
+  const OrderTable = () => {
+    const { products } = order;
+    return (
+      <table className="products-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map(({ product, quantity }) => (
+            <tr key={product._id}>
+              <td>{product.name}</td>
+              <td>
+                {order.status === "pending" ? (
+                  <input
+                    type="number"
+                    value={updatedDetails[product._id] || quantity}
+                    onChange={(e) =>
+                      handleQuantityChange(product._id, e.target.value)
+                    }
+                    min={1}
+                    max={product.stock}
+                  />
+                ) : (
+                  quantity
+                )}
+              </td>
+              <td>{product.price}$</td>
+              <td>
+                <img src={product?.images[0]} alt="product-img" />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+  return (
+    <div className="order-detail">
+      <h1>Order Details</h1>
+      {OrderData}
       <h2>Products</h2>
-      {console.log(order.products)}
-      <OrderTable
-        order={order.products}
-        setUpdatedDetails={setUpdatedDetails}
-        updatedDetails={updatedDetails}
-      />
+      <OrderTable />
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         {order.status === "pending" && (
           <>
@@ -92,9 +140,10 @@ const OrderDetail = () => {
                 Reactivate
               </Button>
             )}
+
             <Button
               className="btn-delete"
-              onClick={() => deleteOrder(order._id)}
+              onClick={() => handleDeleteOrder(order._id)}
             >
               Delete
             </Button>

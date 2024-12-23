@@ -83,7 +83,7 @@ const App = () => {
         <Route
           key={"canceled"}
           path="/cancel"
-          element={<InfoPage message={"Payment Canceled!"} url="my-cart" />}
+          element={<InfoPage message={"Payment Canceled!"} url="/my-cart" />}
         />
         <Route
           key={"not-found"}

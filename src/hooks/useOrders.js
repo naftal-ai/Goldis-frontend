@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import axios from "axios";
 
@@ -14,7 +14,7 @@ const useOrders = () => {
   const { showNotification } = useNotification();
   const { handleError } = useHandleErrors();
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("jwtToken");
@@ -28,24 +28,26 @@ const useOrders = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [showNotification]); 
 
-  const fetchOrder = async (orderId) => {
-    try {
-      setLoading(true);
-      const token = localStorage.getItem("jwtToken");
-      const response = await axios.get(`${API_BASE_URL}/orders/${orderId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching order:", error);
-      showNotification("Failed to fetch order",[], "error");
-    } finally {
-      setLoading(false);
+  const fetchOrder = useCallback(
+    async (orderId) => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem("jwtToken");
+        const response = await axios.get(`${API_BASE_URL}/orders/${orderId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching order:", error);
+        showNotification("Failed to fetch order",[], "error");
+      } finally {
+        setLoading(false);
+      }
     }
-  }
-
+, [showNotification]
+  )
   const handleCheckout = async (orderData) => {
     setLoading(true);
     //check the token is valid
