@@ -71,6 +71,8 @@ const useOrders = () => {
     } catch (error) {
       console.log(error);
       handleError(error);
+    } finally {
+      setLoading(false)
     }
   };
 
