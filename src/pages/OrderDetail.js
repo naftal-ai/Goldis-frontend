@@ -36,8 +36,19 @@ const OrderDetail = () => {
   };
 
   const handleUpdateOrder = async () => {
-    await updateOrder(order._id, updatedDetails);
-    setChanged(false);
+    const { products } = order; // array of objects [{product: product, quantity: number}]
+    const items = [];
+
+    for (const { product, quantity } of products) {
+      const id = product._id;
+      const updatedQuantity = updatedDetails[id]; // Check if the product has an updated quantity
+      items.push({
+        id, // Keep the product ID
+        quantity: updatedQuantity !== undefined ? updatedQuantity : quantity, // Use updated value if available, otherwise keep original
+      });
+    }
+
+    await updateOrder(order._id, items);
   };
 
   const handleDeleteOrder = async (orderId) => {

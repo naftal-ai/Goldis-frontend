@@ -8,6 +8,7 @@ const useProducts = () => {
         const cachedProduct = products.find((product) => id === product._id);
         return cachedProduct;
       }
+
     const availableProduct = (id, quantity=0) => {
         const product = getProductById(id);
         if (!product) {

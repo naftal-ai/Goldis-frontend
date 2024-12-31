@@ -10,13 +10,14 @@ const useHandleErrors = () => {
   const { logout, navigateToLogin } = useAuth();
 
   const handleError = (error) => {
-    const { statusText } = error.response;
+    const { statusText } = error?.response;
     switch (statusText) {
       case "Unauthorized":
         logout();
         navigateToLogin();
         break;
       case "Unprocessable Entity":
+        refetch();
         const { details } = error.response.data;
         console.log(details);
         const products = details.map(({ productId, available, requested }) => ({
@@ -27,40 +28,35 @@ const useHandleErrors = () => {
         console.log(products);
         showNotification(
           `the following products are unavailable in the requested quantity: ${products
-            .map(({product}) => product.name)
-            .join(", ")} 
-          press remove to remove them from the cart, or update to update the quantity`,
+            .map(({ product }) => product.name)
+            .join(",\n ")}`,
           [
             {
-              label: "remove",
-              action: () => {products.forEach(({product}) => {
-                cartDispatch({ type: "REMOVE", payload: product._id });
-            })}},
-
-            {
-              label: "update",
+              label: "remove this items",
               action: () => {
-                products.forEach(({ product, available }) => {
+                details.forEach(({ productId, available }) => {
                   cartDispatch({
                     type: "UPDATE",
-                    payload: {
-                      id: product._id,
-                      quantity: available,
-                    },
+                    payload: { id: productId, quantity: available },
                   });
                 });
               },
-            }], "error"
-            
-          
+            },
+          ],
+          "error"
         );
-        refetch();
         break;
       case "Internal Server Error":
         alert("Server error");
         break;
       default:
-        showNotification(`An error occurred ${error?.response?.data?.message || error.message || ''}`,[], "error");
+        showNotification(
+          `An error occurred ${
+            error?.response?.data?.message || error.message || ""
+          }`,
+          [],
+          "error"
+        );
         break;
     }
   };

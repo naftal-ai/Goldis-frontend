@@ -95,13 +95,15 @@ const useOrders = () => {
     }
   };
 
-  const updateOrder = async (orderId, orderData) => {
+  const updateOrder = async (orderId, items) => {
+    
     try {
       setLoading(true);
       const token = localStorage.getItem("jwtToken");
-      await axios.put(`${API_BASE_URL}/orders/${orderId}`, orderData, {
+      const response = await axios.put(`${API_BASE_URL}/orders/${orderId}`, {items}, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      window.location = response.data.sessionUrl;
       showNotification("Order updated",[], "success");
     } catch (error) {
       console.error("Error updating order:", error);
@@ -118,6 +120,7 @@ const useOrders = () => {
       await axios.delete(`${API_BASE_URL}/orders/${orderId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      await fetchOrders();
       showNotification("Order deleted",[],  "success");
     } catch (error) {
       console.error("Error deleting order:", error);

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 //hooks
 import useCategories from "./hooks/useCategories.js";
+import useCart from "./hooks/useCart.js";
 
 //pages
 import LandingPage from "./pages/LandingPage.js";
@@ -25,7 +26,7 @@ import ProductsList from "./components/products/ProductsList.js";
 
 const App = () => {
   const { categories } = useCategories();
-
+  const { cleanCart } = useCart();
   
   return (
     <>
@@ -77,13 +78,13 @@ const App = () => {
           key={"success"}
           path="/success"
           element={
-            <InfoPage message={"Payment Successful!"} url="/my-orders" />
+            <InfoPage message={"Payment Successful!"} url="/orders" functionToInvoke={cleanCart}/>
           }
         />
         <Route
           key={"canceled"}
           path="/cancel"
-          element={<InfoPage message={"Payment Canceled!"} url="/my-cart" />}
+          element={<InfoPage message={"Payment Canceled!"} url="/orders" functionToInvoke={cleanCart} />}
         />
         <Route
           key={"not-found"}
