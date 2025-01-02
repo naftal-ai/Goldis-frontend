@@ -17,10 +17,10 @@ const InfoPage = ({ message, url = "/", functionToInvoke }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (functionToInvoke) functionToInvoke();
-      navigate(url);
+      navigate(url, {replace: true});
     }, 2000);
     return () => clearTimeout(timer);
-  }, [navigate, url]); // the dependencies is navigate -> if the user is navigating manually before the timeout is over the clear timeout invoke.
+  }, [navigate, url, functionToInvoke]); // the dependencies is navigate -> if the user is navigating manually before the timeout is over the clear timeout invoke.
 
   return (
     <div className="page">
